@@ -28,6 +28,7 @@ class Silex implements HandlerLocator
     /**
      * @param string $commandClassName
      * @return mixed
+     * @throws \InvalidArgumentException
      */
     public function getHandlerForCommand($commandClassName)
     {
@@ -48,6 +49,7 @@ class Silex implements HandlerLocator
     /**
      * @param string $commandClassName
      * @param string $handlerClassName
+     * @throws \InvalidArgumentException
      */
     public function addHandler($commandClassName, $handlerClassName)
     {

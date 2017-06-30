@@ -5,9 +5,9 @@ Provides Tactician as service to Pimple or Silex Container
 
 ### Requirements
 
-* PHP >= 5.5
-* Silex >= 2.0
-* Pimple >= 3.0
+* PHP ^7.0
+* Silex ^2.1
+* Tactician ^1.0
 
 ### Installation
 

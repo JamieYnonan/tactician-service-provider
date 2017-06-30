@@ -2,20 +2,23 @@
 
 namespace Silex\Provider;
 
-use League\Tactician\CommandBus;
-use League\Tactician\Handler\CommandHandlerMiddleware;
-use League\Tactician\Handler\CommandNameExtractor\CommandNameExtractor;
-use League\Tactician\Handler\Locator\HandlerLocator;
-use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
-use League\Tactician\Handler\MethodNameInflector\HandleClassNameWithoutSuffixInflector;
-use League\Tactician\Handler\MethodNameInflector\HandleInflector;
-use League\Tactician\Handler\MethodNameInflector\InvokeInflector;
-use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
-use League\Tactician\Middleware;
-use Pimple\Container;
-use Pimple\ServiceProviderInterface;
-use Silex\Component\Tactician\CommandNameExtractor\Silex as SilexCommandExtractor;
-use Silex\Component\Tactician\Locator\Silex as SilexLocator;
+use League\Tactician\{
+    CommandBus,
+    Middleware,
+    Handler\CommandHandlerMiddleware,
+    Handler\CommandNameExtractor\CommandNameExtractor,
+    Handler\Locator\HandlerLocator,
+    Handler\MethodNameInflector\HandleClassNameInflector,
+    Handler\MethodNameInflector\HandleClassNameWithoutSuffixInflector,
+    Handler\MethodNameInflector\HandleInflector,
+    Handler\MethodNameInflector\InvokeInflector,
+    Handler\MethodNameInflector\MethodNameInflector
+};
+use Pimple\{Container, ServiceProviderInterface};
+use Silex\Component\Tactician\{
+    CommandNameExtractor\Silex as SilexCommandExtractor,
+    Locator\Silex as SilexLocator
+};
 
 /**
  * Class TacticianServiceProvider
@@ -32,6 +35,7 @@ class TacticianServiceProvider implements ServiceProviderInterface
      * @var array
      */
     private $config;
+
     /**
      * @param array $config
      */
@@ -39,8 +43,10 @@ class TacticianServiceProvider implements ServiceProviderInterface
     {
         $this->config = $config;
     }
+
     /**
      * @param Container $app
+     * @throws \InvalidArgumentException
      */
     public function register(Container $app)
     {
@@ -113,7 +119,7 @@ class TacticianServiceProvider implements ServiceProviderInterface
      * @param string $string
      * @return MethodNameInflector
      */
-    private function resolveStringBaseMethodInflector($string)
+    private function resolveStringBaseMethodInflector($string): MethodNameInflector
     {
         switch ($string) {
             case 'class_name':
@@ -149,8 +155,9 @@ class TacticianServiceProvider implements ServiceProviderInterface
     /**
      * @param string|Middleware $middleware
      * @return Middleware
+     * @throws \InvalidArgumentException
      */
-    public function resolveMiddleware($middleware)
+    public function resolveMiddleware($middleware): Middleware
     {
         if ($middleware instanceof Middleware) {
             return $middleware;
@@ -163,6 +170,8 @@ class TacticianServiceProvider implements ServiceProviderInterface
             }
         }
 
-        throw new \InvalidArgumentException(sprintf('Tactician middleware must implement %s', Middleware::class));
+        throw new \InvalidArgumentException(
+            sprintf('Tactician middleware must implement %s', Middleware::class)
+        );
     }
 }
